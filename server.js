@@ -2,10 +2,12 @@ const express= require ('express');
 const fs = require('fs');
 const hbs= require('hbs');
 const port=process.env.PORT || 3000 ;
+// var sphp= require('sphp');
+// var execPhp= require(__dirname+'/cosmetic/main_project/index.php')
 var app= express();
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', hbs);
-
+// app.use(sphp.express('/cosmetic/main_project/index.php'));
 app.use((req, res , next)=>{
     var now= new Date().toString();
 var log =`${now}:${req.method}${req.url}`
@@ -19,6 +21,12 @@ next();
 });
 // app.use((req, res, next)=>{
 //     res.render('maintain.hbs');
+// });
+// app.use('*.php',function(request,response,next) {
+// 	execPHP.parseFile(request.originalUrl,function(phpResult) {
+// 		response.write(phpResult);
+// 		response.end();
+// 	});
 // });
 
 app.use(express.static(__dirname + '/public'));
@@ -50,6 +58,11 @@ res.render('about.hbs',{
     pageTitle: 'About page',
    
     
+});
+});
+app.get('/projects',(req, res)=>{
+res.render('projects.hbs',{
+    pageTitle: 'Projects'
 });
 });
 app.get('/bad',(req,res)=>{
